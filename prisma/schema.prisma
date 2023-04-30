@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model catalogs {
+  id       Int     @id @default(autoincrement())
+  nome     String  @db.Text()
+  conteudo Json?
+  catalogo String?
+  img      String?
+  pdf      String?
+  externo  String?
+}
