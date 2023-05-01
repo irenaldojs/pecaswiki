@@ -2,8 +2,8 @@ import prisma from '.';
 
 export interface Catalog {
   id?: number;
-  nome: String;
-  conteudo?: object;
+  nome: string;
+  conteudo?: string;
   img?: string;
   pdf?: string;
   catalogo?: string;

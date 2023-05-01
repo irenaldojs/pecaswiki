@@ -5,14 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { useState } from 'react';
 
-const links = [
-  { name: 'Inicio', link: '/' },
-  { name: 'Dicas', link: '/dicas' },
-  { name: 'Sobre', link: '/sobre' },
-];
 function NavBar() {
+  const links = [
+    { name: 'Inicio', link: '/' },
+    { name: 'Dicas', link: '/dicas' },
+    { name: 'Sobre', link: '/sobre' },
+    { name: 'Novo', link: '/novocatalogo' },
+  ];
+
   const [showBar, setShowBar] = useState(false);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(-1);
 
   function handlePage(page: number) {
     setShowBar(!showBar);
@@ -27,7 +29,7 @@ function NavBar() {
           <div className='font-black md:text-xl'>Peças Wiki</div>
 
           {/* search bar */}
-          <form id='mySearch'>
+          <form id='mySearch' className={page != 0 ? `hidden` : ''}>
             <div className='relative items-center'>
               <button
                 type='reset'

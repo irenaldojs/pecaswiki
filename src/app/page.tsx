@@ -1,6 +1,6 @@
 import Card from '@/components/Card';
 import { catalogs } from '@prisma/client';
-import useSWR from 'swr';
+import Providers from '@/components/Providers';
 
 interface CatalogProps {
   catalogs: catalogs[];
@@ -11,32 +11,35 @@ async function getCatalogs() {
     next: {
       revalidate: 10,
     },
-  });
-  return res.json();
+  }).then((res) => res.json());
+
+  return res;
 }
 
 async function Home() {
   const catalogs = await getCatalogs();
 
-  console.log(catalogs);
+  if (catalogs == null) return <div>Carregando</div>;
 
   return (
-    <main className='flex flex-wrap md:justify-center gap-5 px-5'>
-      {catalogs.map((catalog: any) => {
-        return (
-          <div key={catalog.id}>
-            <Card
-              index={catalog.id}
-              nome={catalog.nome}
-              conteudo={JSON.stringify(catalog.conteudo) ?? ''}
-              externo={catalog.externo ?? ''}
-              img={catalog.img ?? ''}
-              pdf={catalog.pdf ?? ''}
-            />
-          </div>
-        );
-      })}
-    </main>
+    <Providers>
+      <main className='flex flex-wrap md:justify-center gap-5 px-5'>
+        {catalogs.map((catalog: any) => {
+          return (
+            <div key={catalog.id}>
+              <Card
+                id={catalog.id}
+                nome={catalog.nome}
+                conteudo={JSON.stringify(catalog.conteudo) ?? ''}
+                externo={catalog.externo ?? ''}
+                img={catalog.img ?? ''}
+                pdf={catalog.pdf ?? ''}
+              />
+            </div>
+          );
+        })}
+      </main>
+    </Providers>
   );
 }
 
