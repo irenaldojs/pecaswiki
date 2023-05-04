@@ -67,3 +67,34 @@ body {
     display: none;
   }
 }
+
+.bg-defalt{
+  background-color: #AAB7B8;
+}
+
+.btn-primary{
+  background-color: #5b7bb4;
+  color: white;
+  transition-duration: 0.2s;
+}
+
+.btn-primary:hover{
+  background-color: #365a99;
+  transition-duration: 0.2s;
+}
+
+.btn-danger{
+  background-color: #cc2121;  
+  color: white;
+  transition-duration: 0.2s;
+}
+
+
+.btn-danger:hover{
+  background-color: #6b1414;  
+  transition-duration: 0.2s;
+}
+
+.bg-secondary{
+  background-color: rgba(226 232 240 0.2);
+}

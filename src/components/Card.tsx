@@ -36,7 +36,7 @@ function Card(props: cardProps) {
   return (
     <div
       onClick={handler}
-      className={`px-2 py-1 rounded-lg shadow-md md:w-[18rem] w-full
+      className={`px-2 py-1 rounded-lg shadow-md 
        bg-white z-0 cursor-pointer relative flex flex-col items-center justify-center`}
     >
       <div className='relative h-[16rem] w-full flex items-center justify-center rounded-md p-10'>

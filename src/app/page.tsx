@@ -26,7 +26,7 @@ async function Home() {
       <main className='flex flex-wrap md:justify-center gap-5 px-5'>
         {catalogs.map((catalog: any) => {
           return (
-            <div key={catalog.id}>
+            <div key={catalog.id} className='md:w-[18rem] w-full duration-200'>
               <Card
                 id={catalog.id}
                 nome={catalog.nome}
