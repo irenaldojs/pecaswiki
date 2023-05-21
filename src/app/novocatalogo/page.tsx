@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
-import Image from 'next/image';
-import React, { ReactNode, useEffect, useState } from 'react';
 
-function page() {
+import Image from 'next/image';
+import React, { useState } from 'react';
+import { Catalog } from '../../../lib/prisma/db';
+
+function Page() {
   const [nome, setNome] = useState('');
   const [nomeError, setNomeError] = useState('');
   const [novoConteudo, setNovoConteudo] = useState('');
@@ -11,9 +13,11 @@ function page() {
   const [listaConteudoError, setListaConteudoError] = useState('');
   const [linkCatalogo, setLinkCatalogo] = useState('');
   const [linkCatalogoError, setLinkCatalogoError] = useState('');
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<File | null>(null);
+  const [imageName, setImageName] = useState<string>('');
   const [imageError, setImageError] = useState('');
-  const [pdf, setPdf] = useState<string | null>(null);
+  const [pdf, setPdf] = useState<File | null>(null);
+  const [pdfName, setPdfName] = useState<string>('');
   const [pdfError, setPdfError] = useState<string | null>(null);
 
   function handleNome(event: React.ChangeEvent<HTMLInputElement>) {
@@ -46,11 +50,14 @@ function page() {
     if (fileExtension != ('png' || 'jpg' || 'jpeg')) {
       setImageError('Formato não suportado');
       return;
+    } else {
+      setImageError('');
     }
 
-    if (file && pdfError != '') {
+    if (file) {
       const imageURL = URL.createObjectURL(file);
-      setImage(imageURL);
+      setImageName(file.name);
+      setImage(file);
       setImageError('');
     }
   }
@@ -61,13 +68,15 @@ function page() {
     const fileExtension = fileName
       ?.substring(fileName.lastIndexOf('.') + 1)
       .toLocaleLowerCase();
+
     if (fileExtension != 'pdf') {
       setPdfError('Formato não suportado');
       return;
     }
     if (file) {
       const pdfURL = URL.createObjectURL(file);
-      setPdf(pdf);
+      setPdfName(file.name);
+      setPdf(file);
       setPdfError('');
     }
   }
@@ -93,28 +102,41 @@ function page() {
     }
     if (listaConteudo.length == 0) {
       setListaConteudoError('Adicione uma lista de conteúdo para pesquisa');
-      validate = false;
     } else {
       setListaConteudoError('');
     }
 
-    if (image == '' || image == null) {
+    if (image == null) {
       setImageError('Adicione um logotipo para o catálogo');
     }
     if (
-      (nomeError ||
-        listaConteudoError ||
-        linkCatalogoError ||
-        imageError ||
-        pdfError) != ''
+      nomeError == '' &&
+      listaConteudoError == '' &&
+      linkCatalogoError == '' &&
+      imageError == '' &&
+      pdfError == ''
     ) {
-      validate = false;
+      const listaConteudoString = listaConteudo.join(',');
+
+      const registro: Catalog = {
+        nome,
+        conteudo: listaConteudoString,
+        catalogo: linkCatalogo,
+        externo: '',
+      };
+
+      if (pdf) {
+      }
+
+      if (image) {
+      }
     }
   }
 
   const DivError = (props: { mensagem: string | null }) => (
     <div className='text-end text-red-500 text-sm'>{props.mensagem}</div>
   );
+
   return (
     <div className='flex flex-col justify-center items-center'>
       <div className='w-full md:max-w-[40rem] duration-500'>
@@ -225,11 +247,11 @@ function page() {
             />
             <DivError mensagem={pdfError} />
           </div>
-
+          {/* Enviar */}
           <div className='flex justify-center p-2'>
             <button
               className='p-2 btn-primary rounded-3xl min-w-[10rem]'
-              onClick={() => handleValidate()}
+              onClick={handleValidate}
             >
               Enviar
             </button>
@@ -239,4 +261,4 @@ function page() {
     </div>
   );
 }
-export default page;
+export default Page;

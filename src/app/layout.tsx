@@ -20,9 +20,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang='pt' className='min-h-full no-scrollbar'>
-      <body className={roboto.className + ' bg-gradient-to-t from-[#AAB7B8]'}>
+      <body
+        className={
+          roboto.className + ' bg-gradient-to-t from-[#AAB7B8] h-screen'
+        }
+      >
         <NavBar />
-        <div className='mt-[5rem] px-1'>{children}</div>
+        <div className='mt-[5rem] px-1 h-full'>{children}</div>
       </body>
     </html>
   );

@@ -2,9 +2,9 @@
 
 import { RootState, store } from '../app/store';
 import { setOptions, defaltOptions } from '@/app/store/optionsSlice';
-import { spawn } from 'child_process';
 import Image from 'next/legacy/image';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 interface cardProps {
   id: number;
@@ -20,14 +20,18 @@ const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 function Card(props: cardProps) {
   const index = useAppSelector((state) => state.options.index);
+  const router = useRouter();
 
   const handler = () => {
     store.dispatch(defaltOptions());
+
+    /*
     if (props.id == index) {
       store.dispatch(defaltOptions());
     } else {
       store.dispatch(setOptions(props.id));
     }
+    */
   };
 
   const image = `/logos/${props.img}.png`;
@@ -35,7 +39,10 @@ function Card(props: cardProps) {
 
   return (
     <div
-      onClick={handler}
+      onClick={() => {
+        router.push(`/catalogo/${props.id}`);
+        handler();
+      }}
       className={`px-2 py-1 rounded-lg shadow-md 
        bg-white z-0 cursor-pointer relative flex flex-col items-center justify-center`}
     >
