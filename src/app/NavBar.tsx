@@ -3,22 +3,31 @@
 import { faBars, faClose, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import {useRouter} from 'next/router'
 import { useState } from 'react';
+import { RootState } from './store';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
+
+
+const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 function NavBar() {
+  const route = useRouter()
+  const [page, setPage] = useState('/')
+
   const links = [
     { name: 'Inicio', link: '/' },
-    { name: 'Dicas', link: '/dicas' },
+    { name: 'Catalogos', link: '/catalogos' },
     { name: 'Sobre', link: '/sobre' },
     { name: 'Novo', link: '/novocatalogo' },
   ];
 
   const [showBar, setShowBar] = useState(false);
-  const [page, setPage] = useState(0);
 
-  function handlePage(page: number) {
+  function handlePage(swithPage: string) {
     setShowBar(!showBar);
-    setPage(page);
+    setPage(swithPage)
+    console.log('rota', route.asPath)
   }
 
   return (
@@ -32,7 +41,7 @@ function NavBar() {
           <form
             id='mySearch'
             className={`${
-              page != 0 ? `hidden` : ''
+              route.pathname.substring(0, 10) == '/catalogos' ? `hidden` : ''
             } flex relative items-center grow md:grow-0 w-5xl mx-1`}
           >
             <button
@@ -74,7 +83,7 @@ function NavBar() {
             <li
               key={index}
               className={`md:ml-2 text-xl text-gray-800 hover:text-gray-400 duration-200 md:my-0 my-6 p-2 ${
-                page == index ? 'underline underline-offset-4' : ''
+                route.asPath == '' ? 'underline underline-offset-4' : ''
               }`}
             >
               <Link href={link.link} onClick={() => handlePage(index)}>

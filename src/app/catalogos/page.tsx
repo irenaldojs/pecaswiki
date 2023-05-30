@@ -16,8 +16,7 @@ async function getCatalogs() {
   return res;
 }
 
-async function Home() {
-  return (<div>Home</div>)
+async function Catalogos() {
 
   const catalogs = await getCatalogs();
 
@@ -45,4 +44,4 @@ async function Home() {
   );
 }
 
-export default Home;
+export default Catalogos;

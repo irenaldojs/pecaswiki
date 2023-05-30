@@ -6,7 +6,7 @@ export interface OptionsState {
 }
 
 const initialState: OptionsState = {
-  index: -1,
+  index: 0,
 };
 
 const optionsSlice = createSlice({
@@ -17,7 +17,7 @@ const optionsSlice = createSlice({
       state.index = action.payload;
     },
     defaltOptions: (state) => {
-      state.index = -1;
+      state.index = 0;
     },
   },
 });

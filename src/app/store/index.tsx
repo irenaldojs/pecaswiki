@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import optionsReducer from './optionsSlice';
+import pagesReducer from './pagesSlice';
+
 
 export const store = configureStore({
   reducer: {
     options: optionsReducer,
+    pages: pagesReducer
   },
 });
 

@@ -2,6 +2,7 @@
 
 import { RootState, store } from '../app/store';
 import { setOptions, defaltOptions } from '@/app/store/optionsSlice';
+import { setPages } from '@/app/store/pagesSlice';
 import Image from 'next/legacy/image';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
@@ -25,13 +26,13 @@ function Card(props: cardProps) {
   const handler = () => {
     store.dispatch(defaltOptions());
 
-    /*
     if (props.id == index) {
       store.dispatch(defaltOptions());
     } else {
       store.dispatch(setOptions(props.id));
     }
-    */
+
+    store.dispatch(setPages('/catalogo'))
   };
 
   const image = `/logos/${props.img}.png`;
@@ -58,6 +59,16 @@ function Card(props: cardProps) {
       <h1 className='text-center text-2xl font-bold text-neutral-700 capitalize'>
         {props.nome}
       </h1>
+      
+      
+    </div>
+  );
+}
+
+export default Card;
+
+
+{/*
       <div
         className={`${
           props.id == index ? `visivel` : 'oculto'
@@ -87,8 +98,4 @@ function Card(props: cardProps) {
           </button>
         </div>
       </div>
-    </div>
-  );
-}
-
-export default Card;
+      */}
